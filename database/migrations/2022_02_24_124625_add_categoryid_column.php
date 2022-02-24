@@ -20,6 +20,13 @@ class AddCategoryidColumn extends Migration
             //category_id dapat data dari id yang ada di categories
             $table->foreign('category_id')->references('id')->on('categories');
         });
+
+        Schema::table('medicines', function (Blueprint $table) {
+            $table->unsignedBigInteger('category_id');
+         
+            //category_id dapat data dari id yang ada di categories
+            $table->foreign('category_id')->references('id')->on('categories');
+        });
     }
 
     /**
@@ -30,6 +37,11 @@ class AddCategoryidColumn extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
+            $table->dropForeign(['category_id']);
+            $table->dropColumn(['category_id']);
+        });
+
+        Schema::table('medicines', function (Blueprint $table) {
             $table->dropForeign(['category_id']);
             $table->dropColumn(['category_id']);
         });
