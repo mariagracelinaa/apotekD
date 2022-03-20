@@ -19,3 +19,11 @@ Route::get('/', function () {
 
 Route::resource('medicines', 'MedicineController');
 Route::resource('categories', 'CategoryController');
+
+//mengarahan ke coba1
+Route::get('coba1', 'MedicineController@coba1');
+
+Route::get('report/listmedicine/{id}','CategoryController@showlist');
+
+Route::get('obattermahal', 'MedicineController@obatMahal');
+

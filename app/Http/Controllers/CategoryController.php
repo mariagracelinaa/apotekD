@@ -16,9 +16,50 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $result = DB::table("categories")->get();
-        //dd($result);
-        return view('categories.index', compact('result'));
+        // $result = DB::table("categories")->get();
+        $result = Category::all();
+       
+        return view('categories.index', compact('result')); 
+        
+        //Tugas Week 5
+        //$result = DB::table('medicines')->distinct()->count('category_id');
+        // $result = DB::table('categories')
+        //         ->select('name')
+        //         ->whereNotIn('id', function($a){
+        //             $a->distinct()->select('category_id')->from('medicines');
+        //         })
+        //         ->get();
+
+        // $result = DB::table('categories')
+        //         ->select('categories.id', 'categories.name', DB::raw('IFNULL(AVG(medicines.price), 0)'))
+        //         ->leftJoin('medicines','categories.id','=','medicines.category_id')
+        //         ->groupBy('categories.id', 'categories.name')
+        //         ->orderBy('categories.id')
+        //         ->get();
+
+        // $max = DB::table('medicines')->max('price');
+        // $result = DB::table('medicines')
+        //         ->select('categories.name','medicines.generic_name')
+        //         ->join('categories','categories.id','=', 'medicines.category_id')
+        //         ->where('medicines.price','=',$max)
+        //         ->get();
+
+        // $result=DB::table("medicines")
+        //     ->distinct()
+        //     ->count('category_id');
+
+        // $result=Category::select('name')->whereNotIn('id',function($query){
+        //     $query->distinct()->select('category_id')->from('medicines');
+        // })
+	    // ->get();
+
+        // $result = DB::table('medicines')
+        //         ->select('generic_name')
+        //         ->groupBy ('generic_name')
+        //         ->havingRaw("count('form') = ?", [1])
+        //         ->get();
+
+        // dd($result);
     }
 
     /**
@@ -86,4 +127,23 @@ class CategoryController extends Controller
     {
         //
     }
+
+    public function showlist($id_category){
+        //ambil data kategori berdasarkan id kategori
+        $data = Category::find($id_category);
+
+        //nama kategory
+        $namecategory = $data->name;
+
+        $result = $data->medicines;
+
+        if($result)
+            $getTotalData = $result->count();
+        else  
+            $getTotalData = 0;  
+
+        return view('report.list_medicines_by_category', compact('id_category','namecategory','result','getTotalData'));
+    }
+
+    
 }
