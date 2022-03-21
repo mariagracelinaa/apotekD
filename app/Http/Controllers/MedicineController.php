@@ -133,8 +133,27 @@ class MedicineController extends Controller
     }
 
     public function obatMahal(){
-        $result = 'halo';
-        dd($result);
+        $sub = Medicine::join('categories','categories.id','=','medicines.category_id')
+                ->select('categories.name', DB::raw('MAX(medicines.price) as maxprice'))
+                ->groupBy('medicines.category_id', 'categories.name');
+    
+        $result = Medicine::joinSub($sub, 'sub', function($join){
+                    $join->on('medicines.price','=','sub.maxprice');
+                })->get();
+        
+        // $sub1 = Medicine::select('medicines.generic_name', DB::raw('MAX(medicines.price) AS maxprice'))
+        //         ->join('categories' ,'categories.id','=','medicines.category_id')
+        //         ->groupBy('medicines.generic_name', 'categories.name')
+        //         ->get();
+
+        // $sub2 =  Medicine::select('medicines.category_id',  DB::raw('MAX(medicines.price) AS maxprice'))
+        //         ->join('categories' ,'categories.id','=','medicines.category_id')
+        //         ->groupBy('medicines.category_id')
+        //         ->get();
+
+        // $result = DB::raw("SELECT b.category_id, a.name, a.generic_name, MAX(a.maxprice) AS maxprice FROM (SELECT medicines.generic_name, categories.name, MAX(medicines.price) AS maxprice FROM medicines INNER JOIN categories on categories.id = medicines.category_id GROUP BY medicines.generic_name, categories.name) AS a INNER JOIN (SELECT medicines.category_id, MAX(medicines.price) AS maxprice FROM medicines INNER JOIN categories on categories.id = medicines.category_id GROUP BY medicines.category_id) as b ON a.maxprice = b.maxprice WHERE a.maxprice = b.maxprice GROUP BY a.generic_name ORDER BY b.category_id");
+        // dd($result);
+        return view('medicine.termahal', compact('result'));
     }
 
     public function coba1(){
