@@ -18,12 +18,18 @@ Route::get('/', function () {
 });
 
 Route::resource('medicines', 'MedicineController');
-Route::resource('categories', 'CategoryController');
-
 //mengarahan ke coba1
 Route::get('coba1', 'MedicineController@coba1');
+Route::get('obattermahal', 'MedicineController@obatMahal');
+// routing ajax blup
+Route::post('/medicines/showInfo','MedicineController@showInfo')->name('medicines.showInfo');
 
+
+Route::resource('categories', 'CategoryController');
 Route::get('report/listmedicine/{id}','CategoryController@showlist');
 
-Route::get('obattermahal', 'MedicineController@obatMahal');
+
+
+
+
 

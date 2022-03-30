@@ -197,4 +197,15 @@ class MedicineController extends Controller
         //take(10) => ambil data 10 teratas
         dd($result);
     }
+
+    // untuk dipanggil di ajax
+    public function showInfo()
+    {
+        $result = Medicine::orderBy('price','desc')->first();
+        return response()->json(array(
+            'status'=>'oke',
+            'msg'=>"<div class='alert alert-danger'>
+                    Did you know? <br>Harga obat termahal adalah ".$result->generic_name." ".$result->form." dengan harga ".$result->price."</div>"
+        ),200);
+    }
 }
