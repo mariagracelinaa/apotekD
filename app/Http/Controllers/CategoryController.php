@@ -130,9 +130,10 @@ class CategoryController extends Controller
 
     public function showlist($id_category){
         //ambil data kategori berdasarkan id kategori
+        //eloquent
         $data = Category::find($id_category);
 
-        //nama kategory
+        //nama kategori
         $namecategory = $data->name;
 
         $result = $data->medicines;
