@@ -40,8 +40,11 @@ License: You must have a valid license purchased only from themeforest(the above
 <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
-{{-- ajax --}}
+
+{{-- start ajax --}}
 @yield('javascript')
+{{-- end ajax --}}
+
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -155,6 +158,12 @@ License: You must have a valid license purchased only from themeforest(the above
 				<a href="{{url('obattermahal')}}">
 				<i class="fa fa-dollar"></i>
 				<span class="title">Obat Termahal</span>
+				</a>
+			</li>
+            <li class="start ">
+				<a href="{{url('transactions')}}">
+				<i class="fa fa-shopping-cart"></i>
+				<span class="title">Transaction</span>
 				</a>
 			</li>
 		<!-- END SIDEBAR MENU -->

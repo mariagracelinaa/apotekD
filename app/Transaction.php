@@ -17,6 +17,7 @@ class Transaction extends Model
 
     //many to many
     public function medicines(){
-        return $this->belongsToMany('App\Medicine','medicine_transaction','transaction_id','medicine_id')->withPivot('quantity','price');
+        return $this->belongsToMany('App\Medicine','medicine_transaction','transaction_id','medicine_id')
+                    ->withPivot('quantity','price');
     }
 }

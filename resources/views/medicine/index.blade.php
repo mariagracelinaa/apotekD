@@ -109,5 +109,6 @@
           @endforeach
         </div>
     </div>  
+    {{-- Grid End --}}
   </div>
 @endsection

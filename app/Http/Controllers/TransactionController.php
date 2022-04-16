@@ -14,7 +14,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $result = Transaction::all();
+        return view("transaction.index", compact('result'));
     }
 
     /**
@@ -81,5 +82,21 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction)
     {
         //
+    }
+   
+    public function showAjax(Request $request){
+        $id = $request->id;
+        return response()->json(array(
+            'msg' => $id
+        ), 200);
+    }
+
+    public function showAjax2($id)
+    {
+        $data=Transaction::find($id);
+        $medicines=$data->medicines;
+        return response()->json(array(
+            'msg'=>view('transaction.showdetail',compact('data','medicines'))->render()
+        ),200);
     }
 }

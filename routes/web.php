@@ -26,6 +26,13 @@ Route::post('/medicines/showInfo','MedicineController@showInfo')->name('medicine
 
 Route::get('report/listmedicine/{id}','CategoryController@showlist');
 
+//week 8
+Route::resource('transactions', 'TransactionController');
+Route::post('transactions/showDataAjax', 'TransactionController@showAjax')
+            ->name('transaction.showAjax');
+Route::get('transactions/showDataAjax2/{id}', 'TransactionController@showAjax2')
+            ->name('transaction.showAjax2');
+
 
 
 
