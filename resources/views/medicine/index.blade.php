@@ -1,6 +1,7 @@
 @extends('layout.conquer')
 
 @section('content')
+{{-- portlet --}}
 <h3 class="page-title">
   Daftar Obat <small>Daftar semua obat yang ada di apotek ini</small>
 </h3>
@@ -20,6 +21,8 @@
           {{-- Tempat action button --}}
       </div>
   </div>
+{{-- portlet --}}
+
   <div class="container">
     {{-- <h2>Daftar Obat</h2> --}}
     <table class="table">

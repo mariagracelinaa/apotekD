@@ -166,6 +166,12 @@ License: You must have a valid license purchased only from themeforest(the above
 				<span class="title">Transaction</span>
 				</a>
 			</li>
+            <li class="start ">
+				<a href="{{url('suppliers')}}">
+				<i class="fa fa-shopping-cart"></i>
+				<span class="title">Supplier</span>
+				</a>
+			</li>
 		<!-- END SIDEBAR MENU -->
 	</div>
 </div>

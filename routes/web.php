@@ -33,6 +33,9 @@ Route::post('transactions/showDataAjax', 'TransactionController@showAjax')
 Route::get('transactions/showDataAjax2/{id}', 'TransactionController@showAjax2')
             ->name('transaction.showAjax2');
 
+//Week 9
+Route::resource('suppliers', 'SupplierController');
+
 
 
 
