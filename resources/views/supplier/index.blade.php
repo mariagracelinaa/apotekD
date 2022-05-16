@@ -45,8 +45,15 @@
             <td>{{$d->name}}</td>
             <td>{{$d->address}}</td>
             <td>
-                <a href="" class="btn btn-warning">Edit</a>
-                <a href="" class="btn btn-danger">Hapus</a>
+                <a href="{{url('suppliers/'.$d->id.'/edit')}}" class="btn btn-warning">Edit</a>
+
+                  {{-- Untuk menghapus data --}}
+                  <form method="POST" action="{{url('suppliers/'.$d->id)}}">
+                    @csrf
+                    {{-- Week 11 -> Ditambahkan method PUT untuk mengambil parameter id dari link --}}
+                    @method('DELETE')
+                    <input type="submit" value="Hapus" class="btn btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data {{$d->name}}')) return false">
+                  </form>
             </td>
           </tr>
         @endforeach

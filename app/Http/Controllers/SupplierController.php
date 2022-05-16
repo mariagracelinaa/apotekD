@@ -26,7 +26,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //Tampilan saat ada data baru
+        //Tampilan form untuk menambah data baru
         //Week 9
         return view('supplier.create');
 
@@ -43,7 +43,8 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //Menyimpan data baru
+        //Menyimpan data baru ke database
+        //menangkap value dari create
         $data = new Supplier();
         $data->name = $request->get('name');
         $data->address = $request->get('address');
@@ -75,6 +76,10 @@ class SupplierController extends Controller
     public function edit(Supplier $supplier)
     {
         //Mengedit data
+        //persiapan datanya yang diedit
+        // dd($supplier);
+        $data = $supplier;
+        return view('supplier.edit', compact('data'));
     }
 
     /**
@@ -86,7 +91,15 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
-        //Menyimpan data setelah edit
+        //Menyimpan data setelah edit ke dalam database
+        // Week 11 -> Edit supplier
+
+        // Coba
+        // dd($request);
+        $supplier->name = $request->get('name');
+        $supplier->address = $request->get('address');
+        $supplier->save();
+        return redirect()->route('suppliers.index')->with('status', 'Data supplier berhasil diubah');
     }
 
     /**
@@ -97,6 +110,8 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        // Week 11 -> Hapus data
+        $supplier->delete();
+        return redirect()->route('suppliers.index')->with('status','data berhasil dihapus');
     }
 }
