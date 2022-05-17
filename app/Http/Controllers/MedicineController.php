@@ -106,7 +106,9 @@ class MedicineController extends Controller
      */
     public function edit(Medicine $medicine)
     {
-        //
+        //Homework w11
+        $data = $medicine;
+        return view('medicine.edit', compact('data'));
     }
 
     /**
@@ -118,7 +120,13 @@ class MedicineController extends Controller
      */
     public function update(Request $request, Medicine $medicine)
     {
-        //
+        // Tugas w11 -> update obat
+        $medicine->generic_name = $request->get('generic_name');
+        $medicine->form = $request->get('form');
+        $medicine->restriction_formula = $request->get('restriction_formula');
+        $medicine->price = $request->get('price');
+        $medicine->save();
+        return redirect()->route('medicines.index')->with('status', 'Data obat berhasil diubah');
     }
 
     /**
@@ -129,7 +137,9 @@ class MedicineController extends Controller
      */
     public function destroy(Medicine $medicine)
     {
-        //
+        //Tugas w11 -> Menghapus obat
+        $medicine->delete();
+        return redirect()->route('medicines.index')->with('status','data berhasil dihapus');
     }
 
     public function obatMahal(){

@@ -1,6 +1,13 @@
 @extends('layout.conquer')
 
 @section('content')
+@if(session('status'))
+  {{-- Alert start --}}
+    <div class="alert alert-success">
+      <strong>Sukses!</strong> {{session('status')}}
+    </div>
+  {{-- Alert End --}}
+@endif
 {{-- portlet --}}
 <h3 class="page-title">
   Daftar Obat <small>Daftar semua obat yang ada di apotek ini</small>
@@ -87,6 +94,18 @@
                 </div>
               </td>
               
+              {{-- Update dan delete --}}
+              <td>
+                <a href="{{url('medicines/'.$d->id.'/edit')}}" class="btn btn-warning">Edit</a>
+
+                  {{-- Untuk menghapus data --}}
+                  <form method="POST" action="{{url('medicines/'.$d->id)}}">
+                    @csrf
+                    {{-- Week 11 -> Ditambahkan method PUT untuk mengambil parameter id dari link --}}
+                    @method('DELETE')
+                    <input type="submit" value="Hapus" class="btn btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data {{$d->generic_name}}')) return false">
+                  </form>
+            </td>
           </tr>
         @endforeach
       </tbody>
