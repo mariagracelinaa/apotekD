@@ -43,6 +43,11 @@ Route::post('suppliers/getEditForm2','SupplierController@getEditForm2')->name('s
 Route::post('suppliers/deleteData','SupplierController@deleteData')->name('suppliers.deleteData');
 Route::post('suppliers/saveData','SupplierController@saveData')->name('suppliers.saveData');
 
+Route::post('medicines/getEditForm','MedicineController@getEditForm')->name('medicines.getEditForm');
+Route::post('medicines/getEditForm2','MedicineController@getEditForm2')->name('medicines.getEditForm2');
+Route::post('medicines/deleteData','MedicineController@deleteData')->name('medicines.deleteData');
+Route::post('medicines/saveData','MedicineController@saveData')->name('medicines.saveData');
+
 
 
 

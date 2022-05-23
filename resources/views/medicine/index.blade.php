@@ -47,13 +47,13 @@
       <tbody>
         {{-- Looping data dari db lalu tampilkan --}}
         @foreach ($result as $d)
-          <tr>
-              <td>{{$d->generic_name}}</td>
-              <td>{{$d->form}}</td>
-              <td>{{$d->restriction_formula}}</td>
-              <td>{{$d->category->name}}</td>
+          <tr id="tr_{{$d->id}}">
+              <td id="td_generic_name_{{$d->id}}">{{$d->generic_name}}</td>
+              <td id="td_form_{{$d->id}}">{{$d->form}}</td>
+              <td id="td_restriction_formula_{{$d->id}}">{{$d->restriction_formula}}</td>
+              <td id="td_category_{{$d->id}}">{{$d->category->name}}</td>
               <td>
-                <a href="#detail_{{$d->id}}" data-toggle="modal">
+                <a href="#detail_{{$d->id}}" data-toggle="modal"  id="td_image_{{$d->id}}">
                   <img src="{{asset('images/'.$d->image)}}" height="100px">
                 </a>
                 
@@ -76,7 +76,7 @@
                 {{-- End Modals --}}
               
               </td>
-              <td>
+              <td id="td_price_{{$d->id}}">
                 {{$d->price}}
               </td>
               
@@ -95,7 +95,7 @@
               </td>
               
               {{-- Update dan delete --}}
-              <td>
+            <th>
                 <a href="{{url('medicines/'.$d->id.'/edit')}}" class="btn btn-warning">Edit</a>
 
                   {{-- Untuk menghapus data --}}
@@ -105,7 +105,15 @@
                     @method('DELETE')
                     <input type="submit" value="Hapus" class="btn btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data {{$d->generic_name}}')) return false">
                   </form>
-            </td>
+            </th>
+            <th>
+              <a href="#modalEdit" data-toggle="modal" class="btn btn-warning" onclick="getEditForm({{$d->id}})">Edit 2A</a>
+            
+              <a href='#modalEdit' data-toggle='modal' onclick='getEditForm2({{$d->id}})' class="btn btn-warning">Edit 2B</a>
+            
+              <a class="btn btn-danger" onclick="if(confirm('apakah anda yakin menghapus data {{$d->name}}'))
+                  deleteDataRemoveTR({{$d->id}})">Delete 2</a>
+            </th>
           </tr>
         @endforeach
       </tbody>
@@ -133,4 +141,104 @@
     </div>  
     {{-- Grid End --}}
   </div>
+
+  {{-- Modal start Edit--}}
+  <div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" id="modalContent">
+        <div class="modal-header">
+          <button type="button" class="close" 
+            data-dismiss="modal" aria-hidden="true"></button>
+          <h4 class="modal-title">Edit Medicine</h4>
+        </div>
+        {{-- <div class="modal-body">
+          //Preloader gift
+          {{-- <img src="{{asset('images/loader.gif')}}" alt="loadergift" width="200px">  --}}
+          {{-- <img src="https://i.pinimg.com/originals/a2/de/bf/a2debfb85547f48c3a699423ba75f321.gif" alt="loadergift" width="200px">
+        </div> --}}
+      </div>
+    </div>
+  </div>
+  {{-- Modal end edit --}}
 @endsection
+
+{{-- start ajax --}}
+@section('javascript')
+<script>
+    function getEditForm(id) {
+    $.ajax({
+        type:'POST',
+        url:'{{route("medicines.getEditForm")}}',
+        data:{
+              '_token': '<?php echo csrf_token() ?>',
+              'id':id
+            },
+        success:function(data) {
+            $("#modalContent").html(data.msg);
+        }
+    });
+    }
+
+    function getEditForm2(id) {
+      $.ajax({
+          type:'POST',
+          url:'{{route("medicines.getEditForm2")}}',
+          data:{
+                '_token': '<?php echo csrf_token() ?>',
+                'id':id
+              },
+          success:function(data) {
+              $("#modalContent").html(data.msg);
+          }
+      });
+    }
+
+    function deleteDataRemoveTR(id){
+      $.ajax({
+        type:'POST',
+        url:'{{route("medicines.deleteData")}}',
+        data:{
+              '_token': '<?php echo csrf_token() ?>',
+              'id':id
+            },
+        success:function(data) {
+          if(data.status == 'OK'){
+            alert(data.msg);
+            $('#tr_'+id).remove();
+          } 
+        }
+      });
+    }
+
+    function saveDataUpdateTD(id)
+    {
+      var eGeneric=$('#eGeneric').val();
+      var eForm=$('#eForm').val();
+      var eFormula=$('#eFormula').val();
+      var ePrice=$('#ePrice').val();
+      $.ajax({
+          type:'POST',
+          url:'{{route("medicines.saveData")}}',
+          data:{
+                '_token': '<?php echo csrf_token() ?>',
+                'id':id,
+                'generic_name':eGeneric,
+                'form':eForm,
+                'restriction_formula':eFormula,
+                'price':ePrice
+              },
+          success:function(data) {
+            if(data.status=='OK')
+            {
+              alert(data.msg);
+              $('#td_generic_name_'+id).html(eGeneric);
+              $('#td_form_'+id).html(eForm);   
+              $('#td_restriction_formula_'+id).html(eFormula);
+              $('#td_price_'+id).html(ePrice); 
+            }
+          }
+      });
+    }
+</script>
+@endsection
+{{-- end ajax --}}

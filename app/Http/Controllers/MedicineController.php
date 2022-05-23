@@ -218,4 +218,48 @@ class MedicineController extends Controller
                     Did you know? <br>Harga obat termahal adalah ".$result->generic_name." ".$result->form." dengan harga ".$result->price."</div>"
         ),200);
     }
+
+    public function getEditForm(Request $request){
+        $id = $request->get('id');
+        $data = Medicine::find($id);
+        return response()->json(array(
+            'status'=>'OK',
+            'msg'=>view('medicine.getEditForm', compact('data'))->render()
+        ), 200);
+    }
+
+    public function getEditForm2(Request $request)
+    {
+        $id=$request->get('id');
+        $data = Medicine::find($id);
+        return response()->json(array(
+            'status'=>'OK',
+            'msg'=>view('medicine.getEditForm2', compact('data'))->render()
+        ),200);
+    }
+
+    public function deleteData(Request $request){
+        $id = $request->get('id');
+        $medicine = Medicine::find($id);
+        $medicine->delete();
+        return response()->json(array(
+            'status'=>'OK',
+            'msg'=>"Berhasil menghapus data"
+        ), 200);
+    }
+
+    public function saveData(Request $request)
+    {
+        $id=$request->get('id');
+        $medicine = Medicine::find($id);
+        $medicine->generic_name=$request->get('generic_name');
+        $medicine->form=$request->get('form');
+        $medicine->restriction_formula=$request->get('restriction_formula');
+        $medicine->price=$request->get('price');
+        $medicine->save();
+        return response()->json(array(
+            'status'=>'OK',
+            'msg'=>'berhasil mengubah dataaa'
+        ),200);
+    }
 }

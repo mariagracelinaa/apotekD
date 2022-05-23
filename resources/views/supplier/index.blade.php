@@ -129,6 +129,7 @@
         </div>
       </div>
     </div>
+    {{-- Modal end edit --}}
 @endsection
 
 {{-- start ajax --}}
