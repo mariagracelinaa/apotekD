@@ -114,4 +114,46 @@ class SupplierController extends Controller
         $supplier->delete();
         return redirect()->route('suppliers.index')->with('status','data berhasil dihapus');
     }
+
+    public function getEditForm(Request $request){
+        $id = $request->get('id');
+        $data = Supplier::find($id);
+        return response()->json(array(
+            'status'=>'OK',
+            'msg'=>view('supplier.getEditForm', compact('data'))->render()
+        ), 200);
+    }
+
+    public function getEditForm2(Request $request)
+    {
+        $id=$request->get('id');
+        $data=Supplier::find($id);
+        return response()->json(array(
+            'status'=>'OK',
+            'msg'=>view('supplier.getEditForm2',compact('data'))->render()
+        ),200);
+    }
+
+    public function deleteData(Request $request){
+        $id = $request->get('id');
+        $supplier = Supplier::find($id);
+        $supplier->delete();
+        return response()->json(array(
+            'status'=>'OK',
+            'msg'=>"Berhasil menghapus data"
+        ), 200);
+    }
+
+    public function saveData(Request $request)
+    {
+        $id=$request->get('id');
+        $supplier=Supplier::find($id);
+        $supplier->name=$request->get('name');
+        $supplier->address=$request->get('address');
+        $supplier->save();
+        return response()->json(array(
+            'status'=>'OK',
+            'msg'=>'berhasil mengubah data'
+        ),200);
+    }
 }

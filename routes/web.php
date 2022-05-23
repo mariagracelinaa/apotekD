@@ -36,6 +36,13 @@ Route::get('transactions/showDataAjax2/{id}', 'TransactionController@showAjax2')
 //Week 9
 Route::resource('suppliers', 'SupplierController');
 
+// Week 11
+// Routing untuk getEditForm
+Route::post('suppliers/getEditForm','SupplierController@getEditForm')->name('suppliers.getEditForm');
+Route::post('suppliers/getEditForm2','SupplierController@getEditForm2')->name('suppliers.getEditForm2');
+Route::post('suppliers/deleteData','SupplierController@deleteData')->name('suppliers.deleteData');
+Route::post('suppliers/saveData','SupplierController@saveData')->name('suppliers.saveData');
+
 
 
 
