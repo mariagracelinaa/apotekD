@@ -51,6 +51,8 @@
             <td>
                 <a href="{{url('suppliers/'.$d->id.'/edit')}}" class="btn btn-warning">Edit</a>
 
+                {{-- Week 12 --}}
+                @can('delete-permission', $d)
                   {{-- Untuk menghapus data --}}
                   <form method="POST" action="{{url('suppliers/'.$d->id)}}">
                     @csrf
@@ -58,6 +60,7 @@
                     @method('DELETE')
                     <input type="submit" value="Hapus" class="btn btn-danger" onclick="if(!confirm('apakah anda yakin ingin menghapus data {{$d->name}}')) return false">
                   </form>
+                @endcan
             </td>
             <th>
               <a href="#modalEdit" data-toggle="modal" class="btn btn-warning" onclick="getEditForm({{$d->id}})">Edit 2A</a>

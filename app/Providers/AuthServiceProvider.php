@@ -25,6 +25,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Week 12
+        //Untuk mengatur yang bisa delete supplier hanya owner
+
+        Gate::define('delete-permission', function($user){
+            return ($user->sebagai == 'owner');
+        });
+        // Atau
+        // Gate::define('delete-permission','App\Policies\SupplierPolicy@delete');
     }
 }

@@ -42,6 +42,9 @@
           <th>Foto</th>
           <th>Harga</th>
           <th>Aksi</th>
+          <th>
+            <a href="{{route('medicines.create')}}" class="btn btn-info">Tambah</a>
+        </th>
         </tr>
       </thead>
       <tbody>
