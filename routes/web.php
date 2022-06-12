@@ -59,3 +59,9 @@ Route::post('medicines/saveData','MedicineController@saveData')->name('medicines
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Week 13
+Route::get('/', 'MedicineController@front_index');
+// Route::get('cart', 'MedicineController@cart');
+Route::get('add-to-cart/{id}', 'MedicineController@addToCart');
+Route::get('checkout', 'MedicineController@checkout')->middleware('auth');

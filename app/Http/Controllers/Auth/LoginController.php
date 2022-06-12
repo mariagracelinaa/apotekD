@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+// Week 13
+use Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -29,7 +32,27 @@ class LoginController extends Controller
 
     //  Mengatur setelah login mau dituju ke halaman mana
     // protected $redirectTo = RouteServiceProvider::HOME;
-    protected $redirectTo = "/suppliers";
+    // protected $redirectTo = "/suppliers";
+
+    // Week 13
+    public function redirectTo() {
+        $role = Auth::user()->sebagai;
+        switch ($role) {
+            case 'owner';
+                return '/suppliers';
+                break;
+            case 'pegawai';
+                return '/medicines';
+                break;
+            case 'member';
+                return '/';
+                break;
+            
+            default:
+                return '/home';
+            break;
+        }
+    }
 
     /**
      * Create a new controller instance.

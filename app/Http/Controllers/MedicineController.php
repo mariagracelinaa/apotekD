@@ -262,4 +262,36 @@ class MedicineController extends Controller
             'msg'=>'berhasil mengubah dataaa'
         ),200);
     }
+
+    //Week 13
+    public function front_index() {
+        $medicine = Medicine::all();
+        return view('frontend.product', compact('medicine'));
+    }
+
+    public function addToCart($id) {
+        $m = Medicine::find($id);
+        $cart = session()->get('cart');
+
+        //array 2D
+        //Cek apakah sudah ada session cart dgn id yang dimaksud
+        //Kalau gaada maka buat, kalau ada qty nya di +1
+        if(!isset($cart[$id])){
+            $cart[$id]=[
+                "name" => $m->generic_name,
+                "quantity" => 1,
+                "price" => $m->price,
+                "photo" => $m->image
+            ];
+        }else{
+            $cart[$id]['quantity']++;
+        }
+        //Masukkan ke session
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Medicine added to cart successfully!');
+    }
+
+    public function checkout() {
+        return view('frontend.checkout');
+    }
 }
