@@ -13,7 +13,7 @@ class Transaction extends Model
 
     public function buyer(){
         return $this->belongsTo('App\Buyer','buyer_id');
-        //abc
+        //abc sgjshjd
     }
 
     //many to many
